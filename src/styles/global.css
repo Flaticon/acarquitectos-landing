@@ -1,0 +1,7 @@
+/* src/styles/global.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* pequeño ajuste opcional */
+:root { --primary: #0b5ca8; }

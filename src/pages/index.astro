@@ -1,16 +1,88 @@
 ---
-
+import "../styles/global.css";
+import Header from "../pages/components/Header.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AVN y Techo Propio en 15 días | AC Arquitectos</title>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <Header />
+
+    <main class="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg mt-8">
+      <img src="/images/banner.png" alt="AVN y Techo Propio en 15 días" class="w-full rounded mb-6" />
+
+      <h1 class="text-2xl font-bold text-primary mb-2">AVN y Techo Propio en 15 días</h1>
+      <p class="mb-4">Solicite asesoría y gestión para licencias y proyectos. Complete el formulario y le contactaremos.</p>
+
+      <form id="leadForm" class="space-y-3">
+        <input type="text" name="nombre" placeholder="Nombre completo" required class="w-full border px-3 py-2 rounded" />
+        <input type="text" name="empresa" placeholder="Nombre de la empresa" required class="w-full border px-3 py-2 rounded" />
+        <input type="text" name="contacto" placeholder="Correo o teléfono" required class="w-full border px-3 py-2 rounded" />
+
+        <select name="asesoria" required class="w-full border px-3 py-2 rounded">
+          <option value="">Tipo de asesoría</option>
+          <option value="Revisores Urbanos">Revisores Urbanos</option>
+          <option value="Diseño de Proyectos">Diseño de Proyectos</option>
+        </select>
+
+        <select name="tramite" required class="w-full border px-3 py-2 rounded">
+          <option value="">Tipo de trámite</option>
+          <option value="Habilitación Urbana">Habilitación Urbana</option>
+          <option value="Edificación">Edificación</option>
+        </select>
+
+        <button id="submitBtn" type="submit" class="w-full bg-primary text-white py-2 rounded font-semibold">Solicitar asesoría</button>
+
+        <p id="formMessage" class="text-sm mt-2 hidden"></p>
+      </form>
+
+      <p class="text-xs text-gray-500 mt-4">También puede descargar nuestro brochure: <a class="text-primary" href="/brochure.pdf">Brochure PDF</a></p>
+    </main>
+
+    <script type="module">
+      const form = document.getElementById('leadForm');
+      const msg = document.getElementById('formMessage');
+      const btn = document.getElementById('submitBtn');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        msg.classList.add('hidden'); msg.textContent = '';
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
+
+        const data = Object.fromEntries(new FormData(form));
+
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const json = await res.json();
+          if (json.success) {
+            msg.classList.remove('hidden');
+            msg.classList.remove('text-red-600');
+            msg.classList.add('text-green-600');
+            msg.textContent = 'Gracias — su solicitud fue recibida. Nuestro equipo le contactará pronto.';
+            form.reset();
+          } else {
+            throw new Error(json.message || 'Error en el envío');
+          }
+        } catch (err) {
+          msg.classList.remove('hidden');
+          msg.classList.remove('text-green-600');
+          msg.classList.add('text-red-600');
+          msg.textContent = 'Error al enviar el formulario. Intente nuevamente.';
+          console.error(err);
+        }
+
+        btn.disabled = false;
+        btn.textContent = 'Solicitar asesoría';
+      });
+    </script>
+  </body>
 </html>
