@@ -14,7 +14,7 @@ import Header from "../components/Header.astro";
     <Header />
 
     <main class="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg mt-8">
-      <img src="/images/banner.png" alt="AVN y Techo Propio en 15 días" class="w-full rounded mb-6" />
+      <img src="/images/banner.png" alt="AVN y Techo Propio en 15 días hábiles" class="w-full rounded mb-6" />
 
       <h1 class="text-2xl font-bold text-primary mb-2">Licencias para AVN y Techo Propio en 15 días</h1>
       <p class="mb-4">Solicite asesoría y gestión para licencias y proyectos. Complete el formulario y le contactaremos.</p>
@@ -41,7 +41,35 @@ import Header from "../components/Header.astro";
         <p id="formMessage" class="text-sm mt-2 hidden"></p>
       </form>
 
-      <p class="text-xs text-gray-500 mt-4">También puede descargar nuestro brochure: <a class="text-primary" href="/brochure.pdf">Brochure PDF</a></p>
+      <div class="mt-6 p-4 bg-gray-50 rounded-lg border">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">📄 Documentos de descarga</h3>
+        <div class="grid md:grid-cols-2 gap-3">
+          <a href="/brochure.pdf" class="flex items-center p-3 bg-white border border-primary/20 rounded-lg hover:border-primary transition-colors group">
+            <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mr-3">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-gray-900 group-hover:text-primary">Brochure AC Arquitectos</p>
+              <p class="text-xs text-gray-500">Servicios y proyectos</p>
+            </div>
+          </a>
+          
+          <a href="/normas-vis-2025.pdf" class="flex items-center p-3 bg-white border border-primary/20 rounded-lg hover:border-primary transition-colors group">
+            <div class="flex-shrink-0 w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mr-3">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-gray-900 group-hover:text-primary">Normas Técnicas VIS 2025</p>
+              <p class="text-xs text-gray-500">Condiciones financieras - Perú</p>
+            </div>
+          </a>
+        </div>
+        <p class="text-xs text-gray-500 mt-3 text-center">Documentos informativos para viviendas de interés social y servicios arquitectónicos</p>
+      </div>
     </main>
 
     <script type="module">
