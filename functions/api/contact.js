@@ -58,72 +58,51 @@ Trámite: ${tramite || 'No especificado'}
 Fecha: ${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' })}
 `;
 
-    const emailData = {
-      personalizations: [
-        { 
-          to: [{ email: "proyectos@acarquitectos.com.pe", name: "AC Arquitectos" }]
-        }
-      ],
-      from: {
-        email: "noreply@acarquitectos-landing.pages.dev",
-        name: "Landing AVN & Techo Propio"
-      },
-      reply_to: {
-        email: contacto,
-        name: nombre
-      },
-      subject: `Nuevo lead: ${nombre} de ${empresa}`,
-      content: [
-        { type: "text/plain", value: message },
-        { 
-          type: "text/html", 
-          value: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px;">
-              <h2>Nuevo lead desde landing</h2>
-              <table style="border-collapse: collapse; width: 100%;">
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Nombre:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${nombre}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Empresa:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${empresa}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Contacto:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${contacto}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Asesoría:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${asesoria || 'No especificado'}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Trámite:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${tramite || 'No especificado'}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Fecha:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' })}</td></tr>
-              </table>
-            </div>
-          `
-        }
-      ]
-    };
+    // Import Resend dynamic
+    const { Resend } = await import('resend');
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const resp = await fetch("https://api.mailchannels.net/tx/v1/send", {
-      method: "POST",
-      headers: { 
-        "content-type": "application/json",
-        "User-Agent": "Cloudflare-Workers"
-      },
-      body: JSON.stringify(emailData)
+    const emailResult = await resend.emails.send({
+      from: 'noreply@acarquitectos-landing.pages.dev',
+      to: ['proyectos@acarquitectos.com.pe'],
+      replyTo: contacto,
+      subject: `Nuevo lead: ${nombre} de ${empresa}`,
+      text: message,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px;">
+          <h2>Nuevo lead desde landing</h2>
+          <table style="border-collapse: collapse; width: 100%;">
+            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Nombre:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${nombre}</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Empresa:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${empresa}</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Contacto:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${contacto}</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Asesoría:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${asesoria || 'No especificado'}</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Trámite:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${tramite || 'No especificado'}</td></tr>
+            <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Fecha:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' })}</td></tr>
+          </table>
+        </div>
+      `
     });
 
-    if (!resp.ok) {
-      const errText = await resp.text();
-      console.error('MailChannels error:', errText);
+    if (emailResult.error) {
+      console.error('Resend error:', emailResult.error);
       
       // En desarrollo, simular éxito para testing
       if (origin?.includes('localhost')) {
         console.log('Development mode - simulating email success');
         return new Response(
-          JSON.stringify({ success: true, message: 'Email enviado (simulado en desarrollo)', data: emailData }), 
+          JSON.stringify({ success: true, message: 'Email enviado (simulado en desarrollo)' }), 
           { headers: corsHeaders }
         );
       }
       
       return new Response(
-        JSON.stringify({ success: false, message: 'Error al enviar correo', error: errText }), 
+        JSON.stringify({ success: false, message: 'Error al enviar correo', error: emailResult.error }), 
         { status: 502, headers: corsHeaders }
       );
     }
 
     return new Response(
-      JSON.stringify({ success: true, message: 'Email enviado correctamente' }), 
+      JSON.stringify({ success: true, message: 'Email enviado correctamente', id: emailResult.data?.id }), 
       { headers: corsHeaders }
     );
     
