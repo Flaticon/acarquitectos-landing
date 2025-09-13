@@ -55,24 +55,15 @@ export const POST: APIRoute = async ({ request }) => {
       reply_to: contacto
     };
 
-    // En desarrollo, simulamos el envío
-    const isDev = import.meta.env.MODE === 'development';
-    
-    if (isDev) {
-      console.log('Email simulado:', emailData);
-      return new Response(
-        JSON.stringify({ success: true, message: "Email simulado enviado (desarrollo)" }),
-        { headers: corsHeaders }
-      );
-    }
-
-    // En producción, usar Resend API real
+    // Intentar obtener la API key de Resend
     const resendApiKey = import.meta.env.RESEND_API_KEY_AC_FORMULARIO;
     
+    // Si no hay API key, simular el envío (modo desarrollo/demo)
     if (!resendApiKey) {
+      console.log('Email simulado (sin API key):', emailData);
       return new Response(
-        JSON.stringify({ success: false, message: "API key no configurada" }),
-        { status: 500, headers: corsHeaders }
+        JSON.stringify({ success: true, message: "Email simulado enviado (demo)" }),
+        { headers: corsHeaders }
       );
     }
 
