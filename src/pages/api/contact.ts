@@ -1,6 +1,6 @@
-import type { APIRoute } from 'astro';
+import type { APIContext } from 'astro';
 
-export const GET: APIRoute = async () => {
+export async function GET() {
   return new Response(
     JSON.stringify({
       success: true,
@@ -15,7 +15,7 @@ export const GET: APIRoute = async () => {
   );
 };
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export async function POST({ request, locals }: APIContext) {
   try {
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
@@ -55,19 +55,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
       reply_to: contacto
     };
 
-    // Obtener la API key de Resend (configurada como secreto en Cloudflare Pages)
-    console.log('Runtime available:', !!locals.runtime);
-    console.log('Env available:', !!locals.runtime?.env);
-    
-    // Los secretos en Cloudflare Pages se acceden directamente desde env
-    const env = locals.runtime?.env;
-    if (env) {
-      console.log('Env keys:', Object.keys(env));
-      console.log('Has RESEND key:', 'RESEND_API_KEY_AC_FORMULARIO' in env);
-    }
-    
-    const resendApiKey = env?.RESEND_API_KEY_AC_FORMULARIO || import.meta.env.RESEND_API_KEY_AC_FORMULARIO;
-    console.log('API Key found:', !!resendApiKey);
+    // Acceso tipado a la API key de Resend (secreto de Cloudflare)
+    const resendApiKey = locals.runtime.env.RESEND_API_KEY_AC_FORMULARIO || import.meta.env.RESEND_API_KEY_AC_FORMULARIO;
     
     // Si no hay API key, simular el envío (modo desarrollo/demo)
     if (!resendApiKey) {
