@@ -1,19 +1,21 @@
+import type { APIRoute } from 'astro';
 
-// GET: sirve para probar que el endpoint responde
-export async function onRequestGet() {
+export const GET: APIRoute = async () => {
   return new Response(
     JSON.stringify({
       success: true,
       message: "API funcionando correctamente. Usa POST para enviar un contacto."
     }),
     {
-      headers: { "Content-Type": "application/json" }
+      status: 200,
+      headers: {
+        "Content-Type": "application/json"
+      }
     }
   );
-}
+};
 
-// POST: lógica de envío de correo con Resend
-export async function onRequestPost({ request, env }) {
+export const POST: APIRoute = async ({ request }) => {
   try {
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
@@ -36,9 +38,9 @@ export async function onRequestPost({ request, env }) {
       );
     }
 
-    // Usar Resend API (requiere API key en variables de entorno)
+    // Usar Resend API
     const emailData = {
-      from: "onboarding@resend.dev", // Email verificado de Resend
+      from: "onboarding@resend.dev",
       to: ["rgonzalez@globalingenieros.com"],
       subject: `Nuevo lead: ${nombre} de ${empresa}`,
       html: `
@@ -53,10 +55,31 @@ export async function onRequestPost({ request, env }) {
       reply_to: contacto
     };
 
+    // En desarrollo, simulamos el envío
+    const isDev = import.meta.env.MODE === 'development';
+    
+    if (isDev) {
+      console.log('Email simulado:', emailData);
+      return new Response(
+        JSON.stringify({ success: true, message: "Email simulado enviado (desarrollo)" }),
+        { headers: corsHeaders }
+      );
+    }
+
+    // En producción, usar Resend API real
+    const resendApiKey = import.meta.env.RESEND_API_KEY_AC_FORMULARIO;
+    
+    if (!resendApiKey) {
+      return new Response(
+        JSON.stringify({ success: false, message: "API key no configurada" }),
+        { status: 500, headers: corsHeaders }
+      );
+    }
+
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY_AC_FORMULARIO}`,
+        Authorization: `Bearer ${resendApiKey}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify(emailData)
@@ -82,4 +105,4 @@ export async function onRequestPost({ request, env }) {
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
-}
+};
