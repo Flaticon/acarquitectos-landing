@@ -56,7 +56,7 @@ export const POST: APIRoute = async ({ request }) => {
     };
 
     // Intentar obtener la API key de Resend
-    const resendApiKey = import.meta.env['RESEND_API_KEY-AC-FORMULARIO'];
+    const resendApiKey = import.meta.env.RESEND_API_KEY_AC_FORMULARIO;
     
     // Si no hay API key, simular el envío (modo desarrollo/demo)
     if (!resendApiKey) {
