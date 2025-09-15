@@ -40,7 +40,7 @@ export async function POST({ request, locals }: APIContext) {
 
     // Usar Resend API
     const emailData = {
-      from: "onboarding@resend.dev",
+      from: "rgc00023@gmail.com",
       to: ["rgonzalez@globalingenieros.com"],
       subject: `Nuevo lead: ${nombre} de ${empresa}`,
       html: `
