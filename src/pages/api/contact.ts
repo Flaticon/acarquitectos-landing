@@ -29,14 +29,18 @@ export async function POST({ request, locals }: APIContext) {
     }
 
     const data = await request.json();
-    const { nombre, empresa, contacto, asesoria, tramite } = data;
+    const { nombre, empresa, email, telefono, asesoria, tramite } = data;
 
-    if (!nombre?.trim() || !empresa?.trim() || !contacto?.trim()) {
+    // Validar que al menos uno de los contactos esté presente
+    if (!nombre?.trim() || !empresa?.trim() || (!email?.trim() && !telefono?.trim())) {
       return new Response(
-        JSON.stringify({ success: false, message: "Faltan campos obligatorios" }),
+        JSON.stringify({ success: false, message: "Faltan campos obligatorios. Debe proporcionar al menos email o teléfono." }),
         { status: 400, headers: corsHeaders }
       );
     }
+
+    // Construir contacto para el email
+    const contacto = email?.trim() || telefono?.trim();
 
     // Usar Resend API
     const emailData = {
@@ -47,7 +51,8 @@ export async function POST({ request, locals }: APIContext) {
         <h2>Nuevo lead desde landing</h2>
         <p><strong>Nombre:</strong> ${nombre}</p>
         <p><strong>Empresa:</strong> ${empresa}</p>
-        <p><strong>Contacto:</strong> ${contacto}</p>
+        ${email?.trim() ? `<p><strong>Email:</strong> ${email}</p>` : ''}
+        ${telefono?.trim() ? `<p><strong>Teléfono:</strong> ${telefono}</p>` : ''}
         <p><strong>Asesoría:</strong> ${asesoria || "No especificado"}</p>
         <p><strong>Trámite:</strong> ${tramite || "No especificado"}</p>
         <p><strong>Fecha:</strong> ${new Date().toLocaleString("es-PE", { timeZone: "America/Lima" })}</p>

@@ -98,15 +98,26 @@ import Header from "../components/Header.astro";
             </div>
           </div>
 
-          <div class="space-y-1">
-            <label class="text-xs font-medium text-gray-700">Información de contacto</label>
-            <input
-              type="text"
-              name="contacto"
-              placeholder="Correo electrónico o teléfono"
-              required
-              class="w-full border border-gray-200 px-3 py-3 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-sm text-gray-900 placeholder-gray-500"
-            />
+          <div class="grid sm:grid-cols-2 gap-3 sm:gap-4">
+            <div class="space-y-1">
+              <label class="text-xs font-medium text-gray-700">Correo electrónico</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="su@email.com"
+                class="w-full border border-gray-200 px-3 py-3 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-sm text-gray-900 placeholder-gray-500"
+              />
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-xs font-medium text-gray-700">Teléfono</label>
+              <input
+                type="tel"
+                name="telefono"
+                placeholder="999 888 777"
+                class="w-full border border-gray-200 px-3 py-3 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-sm text-gray-900 placeholder-gray-500"
+              />
+            </div>
           </div>
 
           <div class="grid sm:grid-cols-2 gap-3 sm:gap-4">
@@ -190,10 +201,20 @@ import Header from "../components/Header.astro";
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         msg.classList.add('hidden'); msg.textContent = '';
-        btn.disabled = true;
-        btn.textContent = 'Enviando...';
 
         const data = Object.fromEntries(new FormData(form));
+
+        // Validar que al menos email o teléfono esté presente
+        if (!data.email?.trim() && !data.telefono?.trim()) {
+          msg.classList.remove('hidden');
+          msg.classList.remove('text-green-600');
+          msg.classList.add('text-red-600');
+          msg.textContent = 'Debe proporcionar al menos un email o teléfono.';
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
 
         try {
           const res = await fetch('/api/contact', {
