@@ -9,12 +9,15 @@ import Header from "../components/Header.astro";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>AVN y Techo Propio en 15 días | AC Arquitectos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-gray-100 text-gray-800">
+  <body class="bg-gray-50 text-gray-800 font-['Inter',ui-sans-serif,system-ui,sans-serif] antialiased">
     <Header />
 
-    <main class="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg mt-8">
-      <img src="/images/banner.png" alt="AVN y Techo Propio en 15 días hábiles" class="w-full rounded mb-6" />
+    <main class="max-w-4xl mx-auto p-8 bg-white shadow-lg rounded-2xl mt-10">
+      <img src="/images/banner.png" alt="AVN y Techo Propio en 15 días hábiles" class="w-full rounded-2xl mb-8 shadow-sm" />
 
       <!-- Sección de Noticias del Sector -->
       <div class="mb-8 p-6 bg-gradient-to-r from-blue-50 to-green-50 border-l-4 border-primary rounded-lg">
@@ -64,30 +67,89 @@ import Header from "../components/Header.astro";
         </div>
       </div>
 
-      <h1 class="text-2xl font-bold text-primary mb-2">Licencias para AVN y Techo Propio en 15 días</h1>
-      <p class="mb-4">Solicite asesoría y gestión para licencias y proyectos. Complete el formulario y le contactaremos.</p>
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-primary mb-3 leading-tight">Licencias para AVN y Techo Propio en 15 días</h1>
+        <p class="text-lg text-gray-600 leading-relaxed">Solicite asesoría y gestión para licencias y proyectos. Complete el formulario y le contactaremos.</p>
+      </div>
 
-      <form id="leadForm" class="space-y-3">
-        <input type="text" name="nombre" placeholder="Nombre completo" required class="w-full border px-3 py-2 rounded" />
-        <input type="text" name="empresa" placeholder="Nombre de la empresa" required class="w-full border px-3 py-2 rounded" />
-        <input type="text" name="contacto" placeholder="Correo o teléfono" required class="w-full border px-3 py-2 rounded" />
+      <div class="bg-gradient-to-br from-gray-50 to-blue-50/30 p-8 rounded-2xl border border-gray-100 shadow-sm">
+        <form id="leadForm" class="space-y-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700">Nombre completo</label>
+              <input
+                type="text"
+                name="nombre"
+                placeholder="Ingrese su nombre completo"
+                required
+                class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 placeholder-gray-500"
+              />
+            </div>
 
-        <select name="asesoria" required class="w-full border px-3 py-2 rounded">
-          <option value="">Tipo de asesoría</option>
-          <option value="Revisores Urbanos">Revisores Urbanos</option>
-          <option value="Diseño de Proyectos">Diseño de Proyectos</option>
-        </select>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700">Nombre de la empresa</label>
+              <input
+                type="text"
+                name="empresa"
+                placeholder="Ingrese el nombre de su empresa"
+                required
+                class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 placeholder-gray-500"
+              />
+            </div>
+          </div>
 
-        <select name="tramite" required class="w-full border px-3 py-2 rounded">
-          <option value="">Tipo de proyecto</option>
-          <option value="Habilitación Urbana">Habilitación Urbana</option>
-          <option value="Edificación">Edificación</option>
-        </select>
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-700">Información de contacto</label>
+            <input
+              type="text"
+              name="contacto"
+              placeholder="Correo electrónico o número de teléfono"
+              required
+              class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 placeholder-gray-500"
+            />
+          </div>
 
-        <button id="submitBtn" type="submit" class="w-full bg-primary text-white py-2 rounded font-semibold">Solicitar asesoría</button>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700">Tipo de asesoría</label>
+              <select
+                name="asesoria"
+                required
+                class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 appearance-none cursor-pointer"
+              >
+                <option value="">Seleccione el tipo de asesoría</option>
+                <option value="Revisores Urbanos">Revisores Urbanos</option>
+                <option value="Diseño de Proyectos">Diseño de Proyectos</option>
+              </select>
+            </div>
 
-        <p id="formMessage" class="text-sm mt-2 hidden"></p>
-      </form>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700">Tipo de proyecto</label>
+              <select
+                name="tramite"
+                required
+                class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 appearance-none cursor-pointer"
+              >
+                <option value="">Seleccione el tipo de proyecto</option>
+                <option value="Habilitación Urbana">Habilitación Urbana</option>
+                <option value="Edificación">Edificación</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pt-4">
+            <button
+              id="submitBtn"
+              type="submit"
+              class="w-full bg-gradient-to-r from-primary to-blue-600 text-white py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 hover:from-primary/90 hover:to-blue-600/90 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary/30 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+            >
+              Solicitar asesoría profesional
+            </button>
+          </div>
+
+          <p id="formMessage" class="text-center font-medium mt-4 hidden"></p>
+        </form>
+      </div>
 
 <div class="mt-6 p-4 bg-gray-50 rounded-lg border">
         <h3 class="text-lg font-semibold text-gray-800 mb-3">📄 Documentos de descarga</h3>

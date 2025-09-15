@@ -38,35 +38,22 @@ export async function POST({ request, locals }: APIContext) {
       );
     }
 
-  
-   const ahora = new Date();
-const fechaLima = new Intl.DateTimeFormat('es-PE', {
-  timeZone: 'America/Lima',
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-  second: '2-digit',
-  hour12: false
-}).format(ahora);
-
-  // Usar Resend API
-const emailData = {
-  from: "onboarding@resend.dev",
-  to: ["rgonzalez@globalingenieros.com"],
-  subject: `Nuevo lead: ${nombre} de ${empresa}`,
-  html: `
-    <h2>Nuevo lead desde landing</h2>
-    <p><strong>Nombre:</strong> ${nombre}</p>
-    <p><strong>Empresa:</strong> ${empresa}</p>
-    <p><strong>Contacto:</strong> ${contacto}</p>
-    <p><strong>Asesoría:</strong> ${asesoria || "No especificado"}</p>
-    <p><strong>Trámite:</strong> ${tramite || "No especificado"}</p>
-    <p><strong>Fecha:</strong> ${fechaLima}</p>
-  `,
-  replyTo: contacto 
-};
+    // Usar Resend API
+    const emailData = {
+      from: "onboarding@resend.dev",
+      to: ["rgonzalez@globalingenieros.com"],
+      subject: `Nuevo lead: ${nombre} de ${empresa}`,
+      html: `
+        <h2>Nuevo lead desde landing</h2>
+        <p><strong>Nombre:</strong> ${nombre}</p>
+        <p><strong>Empresa:</strong> ${empresa}</p>
+        <p><strong>Contacto:</strong> ${contacto}</p>
+        <p><strong>Asesoría:</strong> ${asesoria || "No especificado"}</p>
+        <p><strong>Trámite:</strong> ${tramite || "No especificado"}</p>
+        <p><strong>Fecha:</strong> ${new Date().toLocaleString("es-PE", { timeZone: "America/Lima" })}</p>
+      `,
+      reply_to: contacto
+    };
 
     // Acceso tipado a la API key de Resend (secreto de Cloudflare)
     const resendApiKey = locals.runtime.env.RESEND_API_KEY_AC_FORMULARIO || import.meta.env.RESEND_API_KEY_AC_FORMULARIO;
