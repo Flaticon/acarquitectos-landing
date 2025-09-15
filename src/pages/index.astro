@@ -74,48 +74,48 @@ import Header from "../components/Header.astro";
 
       <div class="bg-gradient-to-br from-gray-50 to-blue-50/30 p-8 rounded-2xl border border-gray-100 shadow-sm">
         <form id="leadForm" class="space-y-6">
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <label class="text-sm font-medium text-gray-700">Nombre completo</label>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="space-y-1">
+              <label class="text-xs font-medium text-gray-700">Nombre completo</label>
               <input
                 type="text"
                 name="nombre"
                 placeholder="Ingrese su nombre completo"
                 required
-                class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 placeholder-gray-500"
+                class="w-full border border-gray-200 px-3 py-3 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-sm text-gray-900 placeholder-gray-500"
               />
             </div>
 
-            <div class="space-y-2">
-              <label class="text-sm font-medium text-gray-700">Nombre de la empresa</label>
+            <div class="space-y-1">
+              <label class="text-xs font-medium text-gray-700">Nombre de la empresa</label>
               <input
                 type="text"
                 name="empresa"
                 placeholder="Ingrese el nombre de su empresa"
                 required
-                class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 placeholder-gray-500"
+                class="w-full border border-gray-200 px-3 py-3 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-sm text-gray-900 placeholder-gray-500"
               />
             </div>
           </div>
 
-          <div class="space-y-2">
-            <label class="text-sm font-medium text-gray-700">Información de contacto</label>
+          <div class="space-y-1">
+            <label class="text-xs font-medium text-gray-700">Información de contacto</label>
             <input
               type="text"
               name="contacto"
-              placeholder="Correo electrónico o número de teléfono"
+              placeholder="Correo electrónico o teléfono"
               required
-              class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 placeholder-gray-500"
+              class="w-full border border-gray-200 px-3 py-3 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-sm text-gray-900 placeholder-gray-500"
             />
           </div>
 
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <label class="text-sm font-medium text-gray-700">Tipo de asesoría</label>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="space-y-1">
+              <label class="text-xs font-medium text-gray-700">Tipo de asesoría</label>
               <select
                 name="asesoria"
                 required
-                class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 appearance-none cursor-pointer"
+                class="w-full border border-gray-200 px-3 py-3 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-sm text-gray-900 appearance-none cursor-pointer"
               >
                 <option value="">Seleccione el tipo de asesoría</option>
                 <option value="Revisores Urbanos">Revisores Urbanos</option>
@@ -123,12 +123,12 @@ import Header from "../components/Header.astro";
               </select>
             </div>
 
-            <div class="space-y-2">
-              <label class="text-sm font-medium text-gray-700">Tipo de proyecto</label>
+            <div class="space-y-1">
+              <label class="text-xs font-medium text-gray-700">Tipo de proyecto</label>
               <select
                 name="tramite"
                 required
-                class="w-full border border-gray-200 px-4 py-4 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-gray-900 appearance-none cursor-pointer"
+                class="w-full border border-gray-200 px-3 py-3 rounded-xl bg-white/80 backdrop-blur-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary hover:border-gray-300 shadow-sm text-sm text-gray-900 appearance-none cursor-pointer"
               >
                 <option value="">Seleccione el tipo de proyecto</option>
                 <option value="Habilitación Urbana">Habilitación Urbana</option>
@@ -137,11 +137,11 @@ import Header from "../components/Header.astro";
             </div>
           </div>
 
-          <div class="pt-4">
+          <div class="pt-3">
             <button
               id="submitBtn"
               type="submit"
-              class="w-full bg-gradient-to-r from-primary to-blue-600 text-white py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 hover:from-primary/90 hover:to-blue-600/90 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary/30 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
+              class="w-full bg-gradient-to-r from-primary to-blue-600 text-white py-3 px-5 rounded-xl font-semibold text-base transition-all duration-200 hover:from-primary/90 hover:to-blue-600/90 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary/30 active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none"
             >
               Solicitar asesoría profesional
             </button>
