@@ -50,7 +50,7 @@ export async function POST({ request, locals }: APIContext) {
         <p><strong>Contacto:</strong> ${contacto}</p>
         <p><strong>Asesoría:</strong> ${asesoria || "No especificado"}</p>
         <p><strong>Trámite:</strong> ${tramite || "No especificado"}</p>
-        <p><strong>Fecha:</strong> ${new Date().toLocaleString("es-PE")}</p>
+        <p><strong>Fecha:</strong> ${new Date().toLocaleString("es-PE", { timeZone: "America/Lima" })}</p>
       `,
       reply_to: contacto
     };
